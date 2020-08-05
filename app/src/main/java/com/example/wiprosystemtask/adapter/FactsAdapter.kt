@@ -22,6 +22,7 @@ class FactsAdapter(items: List<RowsItem>, ctx: Context) :
     ArrayAdapter<RowsItem>(ctx, R.layout.facts_item_layout, items) {
 
     internal class ViewHolder(view: View) {
+        //ButterKnife injection
         init {
             ButterKnife.bind(this, view)
         }
@@ -59,6 +60,8 @@ class FactsAdapter(items: List<RowsItem>, ctx: Context) :
         holder.tvSubTitle.text = rowsItem?.description?.let { it }
         if (rowsItem != null) {
             if (rowsItem.imageHref != null) {
+
+                //Showing progress while loading
                 val circularProgressDrawable = CircularProgressDrawable(context)
                 circularProgressDrawable.strokeWidth = 5f
                 circularProgressDrawable.centerRadius = 30f

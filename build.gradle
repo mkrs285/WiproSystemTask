@@ -48,5 +48,15 @@ ext {
     // ButterKnife
     butterKnife_version = '10.2.1'
 
+    fragmentVersion = '1.1.0-alpha07'
+    androidXTestJUnitVersion = '1.1.1'
+    androidXTestCoreVersion = '1.2.0-beta01'
+    androidXTestRulesVersion = '1.2.0-beta01'
+    androidXArchCoreTestingVersion = '2.0.1'
+    mockitoVersion = '2.25.0'
+    nhaarmanMockVersion = '1.5.0'
+    espressoVersion = '3.2.0'
+    robolectricVersion = '4.3-beta-1'
+
 
 }

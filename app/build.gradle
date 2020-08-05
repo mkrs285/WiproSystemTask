@@ -109,8 +109,24 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterKnife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterKnife_version"
 
+
+
+    /** Android Test **/
+    // AndroidX
+    debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion") {
+        exclude group: 'androidx.test', module: 'core'
+    }
+
+
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.test:rules:$androidXTestRulesVersion"
+    androidTestImplementation "androidx.test:core:$androidXTestCoreVersion"
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+    // Mock
+    androidTestImplementation "com.nhaarman:mockito-kotlin:$nhaarmanMockVersion"
+    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 
 }

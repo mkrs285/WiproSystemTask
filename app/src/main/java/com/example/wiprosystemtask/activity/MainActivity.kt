@@ -25,8 +25,10 @@ class MainActivity : BaseActivity(),HasAndroidInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+            //Progress bar instance
         dialog = CustomDialog.getProgressDialog(this, resources.getString(R.string.loader))
 
+        //Adding Fragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, FactsFragment.newInstance())
             .commit()

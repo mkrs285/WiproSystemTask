@@ -21,6 +21,7 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+        //ktx co-routine to accessing viewModels
     protected inline fun <reified VM : ViewModel>
             injectViewModels(): Lazy<VM> = viewModels { viewModelFactory }
 

@@ -19,6 +19,9 @@ import javax.inject.Singleton
 @Component(modules = [AndroidInjectionModule::class,AppModule::class, HttpClientModule::class, ApiModule::class,ViewModelModule::class,ActivityModule::class])
 interface ApplicationComponent : AndroidInjector<DaggerApplication> {
 
+
+    //A factory here is basically a more versatile (and less verbose!) builder.
+    //compile time safety
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance application: Application): ApplicationComponent

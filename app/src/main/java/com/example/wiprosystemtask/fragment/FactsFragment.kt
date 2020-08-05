@@ -26,6 +26,8 @@ class FactsFragment : BaseFragment() {
     }
 
     // Reference to the ViewModel scoped to its Activity
+    // Use the 'by viewModels()' Kotlin property delegate
+    // from the activity-ktx artifact
     private val viewModel: FactsViewModel by injectActivityVIewModels()
 
 
@@ -47,6 +49,7 @@ class FactsFragment : BaseFragment() {
     override fun setup(view: View) {
         fetchFacts()
 
+        //swipe to refresh to get new data
         swipeToRefresh.setOnRefreshListener {
             checkInternetConnection()
             swipeToRefresh.isRefreshing = false
@@ -58,7 +61,7 @@ class FactsFragment : BaseFragment() {
         viewModel.commonViewStateLiveData.observe(this, Observer(this::handleCommonViewState))
 
 
-
+    //checking viewModel for data present
         if (viewModel.factsResponse != null) {
 
             viewModel.factsResponse?.rows?.let { setAdapter(it) }
@@ -70,6 +73,7 @@ class FactsFragment : BaseFragment() {
     }
 
     private fun checkInternetConnection(){
+        //Checking internet connection using connectivity service
         if (activity?.let { ConnectionManager.singletonInstance?.isConnectingToInternet(it) }!!) {
             viewModel.fetchFacts()
         }else{
@@ -82,7 +86,6 @@ class FactsFragment : BaseFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setMessage("No Internet Connection")
         builder.setCancelable(false)
-//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
         builder.setPositiveButton(android.R.string.yes) { dialog, _ ->
             checkInternetConnection()
@@ -99,6 +102,7 @@ class FactsFragment : BaseFragment() {
 
 
     private fun handleCommonViewState(factsUIModel: FactsUIModel) {
+        //observing data from viewModel using liveData
         when (factsUIModel) {
             is FactsUIModel.ShowProgress -> {
                 if (factsUIModel.flag) {
@@ -110,6 +114,7 @@ class FactsFragment : BaseFragment() {
 
             }
             is FactsUIModel.FactsData -> {
+                // Displaying data if reponse is success
                 listFacts.visible()
                 tvError.gone()
                 factsUIModel.packs?.rows?.let { setAdapter(it) }
@@ -117,6 +122,8 @@ class FactsFragment : BaseFragment() {
             }
 
             is FactsUIModel.ShowError -> {
+                //Displaying error message
+                //Using view extensions to Display Views
                 listFacts.gone()
                 tvError.visible()
                 tvError.text = factsUIModel.status
