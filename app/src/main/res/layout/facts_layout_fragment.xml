@@ -4,10 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <ListView
-        android:id="@+id/rvFacts"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listFacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/droid_serif_regular"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="Message"
+        android:layout_gravity="center"
+        android:textColor="@color/sub_title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

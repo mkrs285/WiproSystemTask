@@ -4,20 +4,19 @@ import android.app.Application
 import com.example.wiprosystemtask.di.component.ApplicationComponent
 import com.example.wiprosystemtask.di.component.DaggerApplicationComponent
 import com.example.wiprosystemtask.di.module.AppModule
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
 // appComponent lives in the Application class to share its lifecycle
-class WiproSystemTaskApplication : Application() {
+class WiproSystemTaskApplication : DaggerApplication() {
 
-    private lateinit var mApplicationComponent: ApplicationComponent
+    // Reference to the application graph that is used across the whole app
+    private val appComponent = DaggerApplicationComponent.factory().create(this)
 
-    override fun onCreate() {
-        super.onCreate()
-        // Reference to the application graph that is used across the whole app
-        mApplicationComponent = DaggerApplicationComponent.builder().appModule(AppModule()).build()
-    }
 
     fun getComponent(): ApplicationComponent {
-        return mApplicationComponent
+        return appComponent
     }
 
+    override fun applicationInjector() =appComponent
 }

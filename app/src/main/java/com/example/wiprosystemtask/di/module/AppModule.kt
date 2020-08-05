@@ -1,18 +1,15 @@
 package com.example.wiprosystemtask.di.module
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.wiprosystemtask.BuildConfig
 import com.example.wiprosystemtask.constants.NetworkConstants
-import com.example.wiprosystemtask.viewModelFactory.WiproSystemTaskViewModelFactory
+import com.example.wiprosystemtask.fragment.FactsInterface
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
-import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+class AppModule() {
 
 
     @Singleton
@@ -41,8 +38,4 @@ class AppModule {
         return NetworkConstants.READ_TIME_OUT
     }
 
-    @Provides
-    fun viewModelFactory(providerMap: Map<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProvider.Factory {
-        return WiproSystemTaskViewModelFactory(providerMap)
-    }
 }

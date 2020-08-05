@@ -1,7 +1,7 @@
 package com.example.wiprosystemtask.di.scope
 
-import javax.inject.Qualifier
+import javax.inject.Scope
 
-@Qualifier
+@Scope
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class AppContext
+annotation class ActivityScope

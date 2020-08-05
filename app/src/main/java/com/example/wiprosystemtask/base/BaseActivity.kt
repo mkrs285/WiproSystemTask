@@ -1,27 +1,32 @@
 package com.example.wiprosystemtask.base
 
+import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.wiprosystemtask.WiproSystemTaskApplication
-import com.example.wiprosystemtask.di.component.DaggerFactsComponent
-import com.example.wiprosystemtask.di.component.FactsComponent
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 open class BaseActivity : AppCompatActivity() {
 
-    // factsComponent lives in the Activity class to share its lifecycle
-    private lateinit var factsComponent: FactsComponent
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
 
-    /**
-     * For Initializing Caf Component
-     */
-    fun createFactsComponent() {
-        // Reference to the application graph that is used across the FactsScope
-        factsComponent = DaggerFactsComponent.builder()
-            .applicationComponent((application as WiproSystemTaskApplication).getComponent())
-            .build()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
-    fun getFactsComponent() = factsComponent
+    protected inline fun <reified VM : ViewModel>
+            injectViewModels(): Lazy<VM> = viewModels { viewModelFactory }
+
+
+
+
 
 
 }

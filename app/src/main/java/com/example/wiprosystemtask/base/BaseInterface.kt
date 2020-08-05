@@ -2,7 +2,6 @@ package com.example.wiprosystemtask.base
 
 interface BaseInterface {
 
-    fun unBind()
 
     interface IResponseListener<T> {
 
