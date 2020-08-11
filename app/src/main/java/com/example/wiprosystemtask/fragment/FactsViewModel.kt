@@ -27,7 +27,7 @@ class FactsViewModel @Inject constructor(private val factsRepository: FactsRepos
             factsRepository.getFacts(object : BaseInterface.IResponseListener<FactsResponse> {
                 override fun onProgress() {
                     commonViewStateMutableLiveData.value =
-                        FactsUIModel.ShowProgress(true, R.string.loader)
+                        FactsUIModel.ShowProgress(true)
                 }
 
                 override fun onSuccess(resp: FactsResponse) {
@@ -38,7 +38,7 @@ class FactsViewModel @Inject constructor(private val factsRepository: FactsRepos
                     factsResponse = resp
 
                     commonViewStateMutableLiveData.value =
-                        FactsUIModel.ShowProgress(false, R.string.loader)
+                        FactsUIModel.ShowProgress(false)
                 }
 
                 override fun onFailure(t: Throwable) {
@@ -48,7 +48,7 @@ class FactsViewModel @Inject constructor(private val factsRepository: FactsRepos
                         )
                     }
                     commonViewStateMutableLiveData.value =
-                        FactsUIModel.ShowProgress(false, R.string.loader)
+                        FactsUIModel.ShowProgress(false)
                 }
 
             })

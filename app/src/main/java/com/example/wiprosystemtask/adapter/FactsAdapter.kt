@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.wiprosystemtask.R
 import com.example.wiprosystemtask.repo.factsResponse.RowsItem
 
-
+//using Primary constructor
 class FactsAdapter(items: List<RowsItem>, ctx: Context) :
     ArrayAdapter<RowsItem>(ctx, R.layout.facts_item_layout, items) {
 
@@ -26,19 +26,13 @@ class FactsAdapter(items: List<RowsItem>, ctx: Context) :
         init {
             ButterKnife.bind(this, view)
         }
-
         @BindView(R.id.tvTitle)
         lateinit var tvTitle: TextView
-
         @BindView(R.id.tvSubTitle)
         lateinit var tvSubTitle: TextView
-
         @BindView(R.id.ivImage)
         lateinit var ivImage: ImageView
-
-
     }
-
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -53,8 +47,8 @@ class FactsAdapter(items: List<RowsItem>, ctx: Context) :
             view.tag = holder
         }
 
+        //getting single item based on position
         var rowsItem = getItem(position)
-
 
         holder.tvTitle.text = rowsItem?.title?.let { it }
         holder.tvSubTitle.text = rowsItem?.description?.let { it }

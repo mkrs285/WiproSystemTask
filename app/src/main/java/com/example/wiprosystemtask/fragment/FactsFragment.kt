@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.wiprosystemtask.R
 import com.example.wiprosystemtask.activity.MainActivity
@@ -17,8 +16,9 @@ import com.example.wiprosystemtask.utils.ConnectionManager
 import com.example.wiprosystemtask.utils.gone
 import com.example.wiprosystemtask.utils.visible
 import kotlinx.android.synthetic.main.facts_layout_fragment.*
+import javax.inject.Inject
 
-class FactsFragment : BaseFragment() {
+class FactsFragment @Inject constructor() : BaseFragment() {
 
     //Function that can be called without having a class instance
     companion object {
@@ -30,11 +30,10 @@ class FactsFragment : BaseFragment() {
     // from the activity-ktx artifact
     private val viewModel: FactsViewModel by injectActivityVIewModels()
 
-
     //TAG
     private val className = FactsFragment::class.simpleName
 
-
+    lateinit var dialog: androidx.appcompat.app.AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +48,8 @@ class FactsFragment : BaseFragment() {
     override fun setup(view: View) {
         fetchFacts()
 
+        //Progress bar instance
+        dialog = context?.let { CustomDialog.getProgressDialog(it, resources.getString(R.string.loader)) }!!
         //swipe to refresh to get new data
         swipeToRefresh.setOnRefreshListener {
             checkInternetConnection()
@@ -61,22 +62,22 @@ class FactsFragment : BaseFragment() {
         viewModel.commonViewStateLiveData.observe(this, Observer(this::handleCommonViewState))
 
 
-    //checking viewModel for data present
+        //checking viewModel for data present
         if (viewModel.factsResponse != null) {
 
             viewModel.factsResponse?.rows?.let { setAdapter(it) }
             activity?.title = viewModel.factsResponse?.title
         } else {
-        checkInternetConnection()
+            checkInternetConnection()
         }
 
     }
 
-    private fun checkInternetConnection(){
+    private fun checkInternetConnection() {
         //Checking internet connection using connectivity service
         if (activity?.let { ConnectionManager.singletonInstance?.isConnectingToInternet(it) }!!) {
             viewModel.fetchFacts()
-        }else{
+        } else {
             showDialog()
         }
     }
@@ -106,10 +107,10 @@ class FactsFragment : BaseFragment() {
         when (factsUIModel) {
             is FactsUIModel.ShowProgress -> {
                 if (factsUIModel.flag) {
-                    CustomDialog.updateText(resources.getString(factsUIModel.strRes))
-                    (activity as MainActivity).dialog.show()
+                    CustomDialog.updateText("")
+                    dialog.show()
                 } else {
-                    (activity as MainActivity).dialog.dismiss()
+                    dialog.dismiss()
                 }
 
             }
@@ -134,8 +135,9 @@ class FactsFragment : BaseFragment() {
     }
 
     private fun setAdapter(packs: List<RowsItem>) {
-        val  factsAdapter = activity?.let { FactsAdapter(packs, it) }!!
+        val factsAdapter = activity?.let { FactsAdapter(packs, it) }!!
         listFacts.adapter = factsAdapter
         factsAdapter.notifyDataSetChanged()
     }
+
 }

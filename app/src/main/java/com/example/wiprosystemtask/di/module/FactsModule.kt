@@ -11,6 +11,4 @@ abstract class FactsModule {
     @FactsScope
     @ContributesAndroidInjector
     abstract fun contributeFactsFragment(): FactsFragment
-
-
 }

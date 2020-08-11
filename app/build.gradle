@@ -56,6 +56,15 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                systemProperty 'robolectric.dependency.repo.id', 'central'
+                systemProperty 'robolectric.dependency.repo.url', 'https://repo1.maven.org/maven2/'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -111,11 +120,24 @@ dependencies {
 
 
 
+
+    /** Test **/
+    // JUnit
+    testImplementation 'junit:junit:4.12'
+    // AndroidX
+    testImplementation "androidx.arch.core:core-testing:$androidXArchCoreTestingVersion"
+    // Mock
+    testImplementation "com.nhaarman:mockito-kotlin:$nhaarmanMockVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+
+
     /** Android Test **/
     // AndroidX
-    debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion") {
+
+
+    implementation ("androidx.fragment:fragment-testing:1.1.0-beta01", {
         exclude group: 'androidx.test', module: 'core'
-    }
+    })
 
 
     testImplementation 'junit:junit:4.13'
@@ -128,5 +150,9 @@ dependencies {
     // Mock
     androidTestImplementation "com.nhaarman:mockito-kotlin:$nhaarmanMockVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+    //Robolectric
+    testImplementation  'org.robolectric:robolectric:4.3'
+    testImplementation 'org.robolectric:android-all:4.1.2_r1-robolectric-0'
+    debugImplementation 'androidx.test:core:1.2.0'
 
 }

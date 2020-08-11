@@ -8,8 +8,9 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityModule {
 
+    //Alive until activity lives
     @ActivityScope
-    @ContributesAndroidInjector(modules = [FactsModule::class])
+    @ContributesAndroidInjector(modules = [FactsModule::class,FragmentFactoryModule::class])
     internal abstract fun contributeMainActivity(): MainActivity
 
 
